@@ -21,9 +21,15 @@ func SetupRoutes(router *gin.Engine) {
 		merchant.GET("/getMerchant", middleware.AuthMiddleware(), controllers.GetMerchants)
 	}
 
-	customer := router.Group("/customers")
+	product := router.Group("/products")
 	{
-		customer.POST("/createCustomer", controllers.CreateCustomer)
-		customer.GET("/getCustomer", controllers.GetCustomers)
+		product.POST("/createProduct", middleware.AuthMiddleware(), controllers.CreateProduct)
+		product.GET("/getProduct", middleware.AuthMiddleware(), controllers.GetProducts)
+	}
+
+	order := router.Group("/orders")
+	{
+		order.POST("/createOrder", middleware.AuthMiddleware(), controllers.CreateOrder)
+		order.GET("/getOrder", middleware.AuthMiddleware(), controllers.GetOrders)
 	}
 }
